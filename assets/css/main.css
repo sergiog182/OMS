@@ -163,3 +163,14 @@ img.pull-left { margin-right: 10px; }
 {
 	display: table-row;
 }
+
+.addImageOption
+{
+	width: 100%;
+	text-align: center;
+}
+
+.table-container
+{
+	overflow-x: auto; 
+}
