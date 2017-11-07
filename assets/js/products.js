@@ -1,8 +1,8 @@
 var urlservicios = "http://localhost:8984/solr/productsCore/";
-var imagesToAdd = new Array();
-var imagesToDelete = new Array();
+var images = new Array();
+var idTemp = 1;
 
-function printProductData(jsonData, headers, canEdit, divName, parametro, page) {
+function printProductData(jsonData, headers, canEdit, divName, parametro, page, numeroElementos) {
 	var divTableContainer = document.createElement("DIV");
 	$(divTableContainer).addClass("table-container");
 	var table = document.createElement("TABLE");
@@ -51,7 +51,7 @@ function printProductData(jsonData, headers, canEdit, divName, parametro, page) 
 		rowtr.appendChild(tdPrice);
 
 		var tdEI = document.createElement("TD");
-		var rowCellText = document.createTextNode(element.externalidentifier);
+		var rowCellText = document.createTextNode(element.externalIdentifier);
 		tdEI.appendChild(rowCellText);
 		rowtr.appendChild(tdEI);
 
@@ -78,12 +78,15 @@ function printProductData(jsonData, headers, canEdit, divName, parametro, page) 
 		$(imageDetail).attr("data-target", "#formModal");
 		$(imageDetail).attr("data-name", element.name);
 		$(imageDetail).attr("data-producer", element.producer);
+		$(imageDetail).attr("data-idproducer", element.idProducer);
 		$(imageDetail).attr("data-price", element.price);
-		$(imageDetail).attr("data-externalidentifier", element.externalidentifier);
+		$(imageDetail).attr("data-externalIdentifier", element.externalIdentifier);
 		$(imageDetail).attr("data-description", element.description);
 		$(imageDetail).attr("data-images", element.images.join("~separador~"));
+		$(imageDetail).attr("data-idimages", element.idImages.join("~separador~"));
 		$(imageDetail).attr("data-id", element.id);
 		$(imageDetail).attr("data-status", element.status);
+		$(imageDetail).attr("data-idstatus", element.idStatus);
 		var spanDetail = document.createElement("SPAN");
 		$(spanDetail).addClass("glyphicon glyphicon-eye-open");
 		imageDetail.appendChild(spanDetail);
@@ -99,12 +102,15 @@ function printProductData(jsonData, headers, canEdit, divName, parametro, page) 
 			$(imageEdit).attr("data-target", "#formModal");
 			$(imageEdit).attr("data-name", element.name);
 			$(imageEdit).attr("data-producer", element.producer);
+			$(imageEdit).attr("data-idproducer", element.idProducer);
 			$(imageEdit).attr("data-price", element.price);
-			$(imageEdit).attr("data-externalidentifier", element.externalidentifier);
+			$(imageEdit).attr("data-externalIdentifier", element.externalIdentifier);
 			$(imageEdit).attr("data-description", element.description);
 			$(imageEdit).attr("data-images", element.images.join("~separador~"));
+			$(imageEdit).attr("data-idimages", element.idImages.join("~separador~"));
 			$(imageEdit).attr("data-id", element.id);
 			$(imageEdit).attr("data-status", element.status);
+			$(imageEdit).attr("data-idstatus", element.idStatus);
 			var spanEdit = document.createElement("SPAN");
 			$(spanEdit).addClass("glyphicon glyphicon-pencil");
 			imageEdit.appendChild(spanEdit);
@@ -126,16 +132,18 @@ function printProductData(jsonData, headers, canEdit, divName, parametro, page) 
 	$(div).addClass("active");
 	$(div).html(divTableContainer);
 
-	getPaginator(parametro, page, 10);
+	printPaginator(page, numeroElementos, 10, "result-content", parametro);
+	setCargando(0);
 }
 
 function getProducts(start, rows, parametro, divResult, page)
 {
-	$.getJSON(urlservicios + "select?indent=on&q=" + parametro + "&wt=json&sort=id asc&wt=json&rows=" + rows + "&start=" + start, function(result){
+	setCargando(1);
+	$.getJSON(urlservicios + "select?indent=on&q=" + parametro + "&wt=json&sort=id asc&rows=" + rows + "&start=" + start, function(result){
 	    var jsonResponse = JSON.parse(JSON.stringify(result));
 	    if (jsonResponse.responseHeader.status == 0) {
 	    	if (jsonResponse.response.numFound > 0) {
-	    		printProductData(jsonResponse.response.docs, ["id", "Nombre", "Descipcion", "Precio", "Identificador Externo", "Productor", "Estado"], true, divResult, parametro, page);
+	    		printProductData(jsonResponse.response.docs, ["id", "Nombre", "Descipcion", "Precio", "Identificador Externo", "Fabricante", "Estado"], true, divResult, parametro, page, jsonResponse.response.numFound);
 	    	} else {
 	    		$("#result-content").html("La consulta no obtuvo resultados");
 	    	}
@@ -143,22 +151,6 @@ function getProducts(start, rows, parametro, divResult, page)
 	    	$("#result-content").html("Error realizando consulta");
 	    }
   	});
-}
-
-function getPaginator(parametro, currentPage, itemsToShow)
-{
-	$.getJSON(urlservicios + "select?indent=on&q=" + parametro + "&wt=json&sort=id asc&wt=json", function(result){
-	    var jsonResponse = JSON.parse(JSON.stringify(result));
-	    if (jsonResponse.responseHeader.status == 0) {
-	    	if (jsonResponse.response.numFound > 0) {
-	    		printPaginator(currentPage, jsonResponse.response.numFound, itemsToShow, "result-content", parametro);
-	    	} else {
-	    		return "La consulta no obtuvo resultados";
-	    	}
-	    } else {
-	    	return "Error realizando consulta";
-	    }
-  	});	
 }
 
 $(document).ready(function(){
@@ -227,7 +219,7 @@ $(document).ready(function(){
 		$("#divExternalIdentifier").html("<input type='text' class='form-control' id='txtExternalIdentifier' name='txtExternalIdentifier' value='" + $(this).data("externalidentifier") + "'/>");
 		var selectActivo = "";
 		var selectInactivo = "";
-		if ($(this).data("status").toLowerCase() == "activo") {
+		if ($(this).data("idstatus") == 1) {
 			selectActivo = "selected";
 		} else {
 			selectInactivo = "selected";
@@ -239,21 +231,23 @@ $(document).ready(function(){
 		var contador = 0;
 		var clase = "image active-image";
 		$("#productImages").html("");
+		images[$("#txtIdProdcut").val()] = new Array();
+		var imagesid = ($(this).data("idimages")).toString().split("~separador~");
 		imagenes.forEach(function(element){
+			var idactual = imagesid[contador];
+			images[$("#txtIdProdcut").val()][idactual] = element;
 			contador++;
 			if (contador != 1) {
 				clase = "image";
 			}
-			$("#productImages").append("<div class='" + clase + "' id='image" + contador + "'><img class='img-thumbnail' src='" + element + "' /> </div>");
+			$("#productImages").append("<div class='" + clase + "' id='image" + contador + "' data-idimage='" + idactual + "'><img class='img-thumbnail' src='" + element + "' /> </div>");
+
 		});
 		$("#productImages").data("actual", 1);
 		$("#productImages").data("max", contador);
 		$("#productImages").data("min", 1);
 		$("#agregarImagen").addClass("active-fila");
 		$("#eliminarImagen").addClass("active-fila");
-
-		imagesToAdd[$("#txtIdProdcut").val()] = new Array();
-		imagesToDelete[$("#txtIdProdcut").val()] = new Array();
 
 		$("#btnGuardarProducto").removeClass("btn-hide");
 
@@ -296,8 +290,7 @@ $(document).ready(function(){
 
 		$("#productImages").html("");
 
-		imagesToAdd[$("#txtIdProdcut").val()] = new Array();
-		imagesToDelete[$("#txtIdProdcut").val()] = new Array();
+		images[$("#txtIdProdcut").val()] = new Array();
 
 		$("#btnGuardarProducto").removeClass("btn-hide");
 		$("#txtProducer").typeahead({
@@ -378,10 +371,9 @@ $(document).ready(function(){
 			if (confirm("¿Esta seguro de eliminar esta imagen?")) {	
 				var actual = $("#productImages").data("actual");
 				var minima = $("#productImages").data("min");
-				if (imagesToAdd[$("#txtIdProdcut").val()][actual] != null && imagesToAdd[$("#txtIdProdcut").val()][actual] != undefined) {
-					imagesToAdd[$("#txtIdProdcut").val()].splice(actual, 1);
-				} else {
-					imagesToDelete[$("#txtIdProdcut").val()].push($('#image' + actual + ' > img').attr("src"));
+				var imagen = $("#image" + actual).data("idimage");
+				if (images[$("#txtIdProdcut").val()][imagen] != null && images[$("#txtIdProdcut").val()][imagen] != undefined) {
+					images[$("#txtIdProdcut").val()].splice(imagen, 1);
 				}
 
 				$("#image" + actual).remove();
@@ -394,10 +386,6 @@ $(document).ready(function(){
 						if (primero) {
 							$("#image" + (actual - 1)).addClass("active-image");
 							primero = false;
-						}
-						if (imagesToAdd[$("#txtIdProdcut").val()][actual] != null && imagesToAdd[$("#txtIdProdcut").val()][actual] != undefined) {
-							imagesToAdd[$("#txtIdProdcut").val()][(actual - 1)] = imagesToAdd[$("#txtIdProdcut").val()][actual];
-							imagesToAdd[$("#txtIdProdcut").val()].splice(actual, 1);
 						}
 						actual++;
 					}
@@ -420,8 +408,9 @@ $(document).ready(function(){
 	        		$(".image").removeClass("active-image");
 	        	}
 	        	cantidad++;
-	        	imagesToAdd[$("#txtIdProdcut").val()][cantidad] = e.target.result;
-	            $("#productImages").append("<div class='image active-image' id='image" + cantidad + "'><img class='img-thumbnail' src='" + e.target.result + "' /> </div>");
+	        	images[$("#txtIdProdcut").val()][parseInt(idTemp)] = e.target.result;
+	        	$("#productImages").append("<div class='image active-image' id='image" + cantidad + "' data-idimage='" + idTemp + "'><img class='img-thumbnail' src='" + e.target.result + "' /> </div>");
+	            idTemp++;
 	            $("#productImages").data("actual", cantidad);
 				$("#productImages").data("max", cantidad);
 				$("#productImages").data("min", 1);
@@ -435,7 +424,9 @@ $(document).ready(function(){
 
 	$(document).on("click", ".btn-paginator, #previusPage, #nextPage", function(){
 		var page = $(this).data("page");
-		var parametro = $(this).data("parametro");
-		getProducts(((page * 10) -10), 10, parametro, "result-content", page);
+		if (page != 0) {
+			var parametro = $(this).data("parametro");
+			getProducts(((page * 10) -10), 10, parametro, "result-content", page);	
+		}
 	});
 });

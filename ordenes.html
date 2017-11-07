@@ -48,7 +48,10 @@
 						<ul class="dropdown-menu">
 							<li><a href="productosMasVendidos.html">Productos m&aacute;s vendidos</a></li>
 							<li><a href="categoriasMasVendidas.html">Categor&iacute;as m&aacute;s vendidas</a></li>
-							<li><a href="rankingClientesProductos.html">Ranking de clientes/productos</a></li>
+							<li><a href="ordenesQueMasFacturaron.html">Ordenes que mas factruaron</a></li>
+							<li><a href="ordenesCerradas.html">Ordenes cerradas</a></li>
+							<li><a href="ordenesAbiertas.html">Ordenes abiertas</a></li>
+							<li><a href="rankingClientes.html">Ranking clientes</a></li>
 						</ul>
 					</li>
 					<li><a href="#" class="cerrarSesion">Cerrar sesi&oacute;n</a></li>
@@ -58,50 +61,134 @@
 	</div> 
 	<!-- /.navbar -->
 	<header id="head" class="secondary"></header>
-	<!-- Intro -->
-	<div class="container text-center">
-		<br> <br>
-		<h2 class="thin">Bienvenido al modulo de administracion</h2>
-		<p class="text-muted">
-			Aqui podras ralizar la administracion de KallSonys y sus componentes
-		</p>
-	</div>
-	<!-- /Intro-->
-		
-	<!-- Highlights - jumbotron -->
-	<div class="jumbotron top-space">
-		<div class="container">
-			
-			<h3 class="text-center thin">Tareas que puedes realizar</h3>
-			
-			<div class="row">
-				<div class="col-md-3 col-sm-6 highlight">
-					<div class="h-caption"><h4><i class="fa fa-shopping-cart fa-5"></i>Productos</h4></div>
-					<div class="h-body text-center">
-						<p>En esta opcion podras ralizar una administracion completa de los productos que maneja Kall
-							Sonys, podras buscar, listar, editar y eliminar productos.</p>
+	<!-- container -->
+	<div class="container">
+		<div class="row">
+			<!-- Article main content -->
+			<article class="col-xs-12 maincontent">
+				<header class="page-header">
+					<h2 class="thin">Modulo de Ordenes</h2>
+				</header>
+				
+				<div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<form>
+								<div class="row">
+									<div class="col-lg-4">
+										<label>N&uacute;mero de orden: </label>
+										<input type="text" class="form-control" id="numeroOrden" name="numeroOrden">
+									</div>
+									<div class="col-lg-4">
+										<label>Codigo producto: </label>
+										<input type="text" class="form-control" id="codigoProductoComprado" name="codigoProductoComprado">
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="row">
+									<div class="col-lg-8"></div>
+									<div class="col-lg-4 text-right">
+										<!--<button class="btn btn-success" data-toggle="modal" data-target="#formModal" type="button" id="addClient" name="addClient">
+											Agregar
+										</button>-->
+										&nbsp;
+										<button class="btn btn-action" type="button" id="findClient" name="findClient">
+											Buscar
+										</button>
+									</div>
+								</div>
+
+								<!-- Modal -->
+								<div id="formModal" name="formModal" class="modal fade" role="dialog">
+								  	<div class="modal-dialog">
+									    <!-- Modal content-->
+									    <div class="modal-content">
+									      	<div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal">&times;</button>
+										        <h4 class="modal-title">Orden <label id="orderCode" name="orderCode"></label></h4>
+									      	</div>
+									      	<div class="modal-body" id="modalContent" name="modalContent">
+									      		<div class="row">
+									      			<input type="hidden" name="txtIdClient" id="txtIdClient" value="0">
+									      			<div class="col-md-6">
+									      				<label for="divFecha">
+									      					Fecha:
+									      				</label>
+									      				<div name="divFecha" id="divFecha">
+									      				</div>
+									      			</div>
+									      			<div class="col-md-6">
+									      				<label for="divPrice">
+									      					Valor:
+									      				</label>
+									      				<div name="divPrice" id="divPrice">
+									      				</div>
+									      			</div>
+									      		</div>
+									      		<div class="row">
+									      			<div class="col-md-6">
+									      				<label for="divStatus">
+									      					Estado:
+									      				</label>
+									      				<div name="divStatus" id="divStatus">
+									      				</div>
+									      			</div>
+									      			<div class="col-md-6">
+									      				<label for="divAddress">
+									      					Direccion entrega:
+									      				</label>
+									      				<div name="divAddres" id="divAddres">
+									      				</div>
+									      			</div>
+								      			</div>
+									      		<div class="row">
+									      			<div class="col-md-12">
+									      				<label for="divComment">
+									      					Comentarios:
+									      				</label>
+									      				<div name="divComment" id="divcomment">
+									      				</div>
+									      			</div>
+								      			</div>
+								      			
+									      		<div class="row">
+									      			<div class="col-md-6">
+									      				<label for="divItems">
+									      					Items:
+									      				</label>
+									      				<div name="divItems" id="divItems">
+									      				</div>
+									      			</div>
+									      		</div>
+									      	</div>
+								      		<div class="modal-footer">
+								      			<button type="button" id="btnCancelarOrden" name="btnCancelarOrden" class="btn btn-action">Cancelar</button>
+								      			&nbsp;
+								      			<button type="button" id="btnEliminarOrden" name="btnEliminarOrden" class="btn btn-action">Eliminar</button>
+								      			&nbsp;
+										        <button type="button" class="btn btn-action" data-dismiss="modal">Close</button>
+									      	</div>
+									    </div>
+								  	</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body" name="result-content dataContainer" id="result-content">
+							<table class="table table-bordered table-hover">
+								<tr>
+									<th>
+										Aun sin datos
+									</th>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-3 col-sm-6 highlight">
-					<div class="h-caption"><h4><i class="fa fa-smile-o fa-5"></i>Clientes</h4></div>
-					<div class="h-body text-center">
-						<p>En esta opcion podras realizar una administracion de los clientes que han realizado compras en KallSonys.</p>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 highlight">
-					<div class="h-caption"><h4><i class="fa fa-calendar fa-5"></i>Campa&ntilde;as</h4></div>
-					<div class="h-body text-center">
-						<p>En esta opcion podras realizar una administracion de las campa&ntilde;as que maneja KallSonys, creando, editando o finalizandolas.</p>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 highlight">
-					<div class="h-caption"><h4><i class="fa fa-list fa-5"></i>Ordenes</h4></div>
-					<div class="h-body text-center">
-						<p>En esta seccion podras realizar diferentes taras con respecto a las ordenes de los clientes, como buscar, cambiar estados, canelarlas o eliminarlas.</p>
-					</div>
-				</div>
-			</div> <!-- /row  -->
-		
+			</article>
 		</div>
 	</div>
 
@@ -149,6 +236,10 @@
 			</div>
 		</div>
 	</footer>
+
+	<div id="divCargando" class="backgroundCarga">
+		<img src="assets/images/cargando.gif">
+	</div>
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
 	<script src="assets/js/jQuery.min.js"></script>

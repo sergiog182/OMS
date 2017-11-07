@@ -49,7 +49,10 @@
 						<ul class="dropdown-menu">
 							<li><a href="productosMasVendidos.html">Productos m&aacute;s vendidos</a></li>
 							<li><a href="categoriasMasVendidas.html">Categor&iacute;as m&aacute;s vendidas</a></li>
-							<li><a href="rankingClientesProductos.html">Ranking de clientes/productos</a></li>
+							<li><a href="ordenesQueMasFacturaron.html">Ordenes que mas factruaron</a></li>
+							<li><a href="ordenesCerradas.html">Ordenes cerradas</a></li>
+							<li><a href="ordenesAbiertas.html">Ordenes abiertas</a></li>
+							<li><a href="rankingClientes.html">Ranking clientes</a></li>
 						</ul>
 					</li>
 					<li><a href="#" class="cerrarSesion">Cerrar sesi&oacute;n</a></li>
@@ -123,7 +126,7 @@
 									      			</div>
 									      			<div class="col-md-6">
 									      				<label for="divProducer">
-									      					Productor:
+									      					Fabricante:
 									      				</label>
 									      				<div name="divProducer" id="divProducer">
 									      				</div>
@@ -147,7 +150,7 @@
 									      		</div>
 									      		<div class="row">
 									      			<div class="col-md-6">
-									      				<label for="divPrice">
+									      				<label for="divStatus">
 									      					Estado:
 									      				</label>
 									      				<div name="divStatus" id="divStatus">
@@ -169,18 +172,10 @@
 								      						<tbody>
 								      							<tr id="agregarImagen" class="hidden-element">
 								      								<td colspan="3">
-							      										<table class="addImageOption">
-							      											<tr>
-							      												<td>
-							      													<input class="form-control" type='file' id="imgInp" name="imgInp" />
-							      												</td>
-							      												<td>
-						      														<button type="button" class="btn-custom btn-sm btn-success" id="btnImageAdd" name="btnImageAdd">
-											      										<span class="glyphicon glyphicon-plus"></span>
-											      									</button>
-							      												</td>
-							      											</tr>
-						      											</table>
+							      										<div class="input-group col-md-12">
+							      											<input class="form-control" type='file' id="imgInp" name="imgInp" />
+						      												<span class='input-group-addon' id="btnImageAdd" name="btnImageAdd"><span class='glyphicon glyphicon-plus'></span></span>
+								      									</div>
 								      								</td>
 								      							</tr>
 								      							<tr>
@@ -282,7 +277,9 @@
 			</div>
 		</div>
 	</footer>
-
+	<div id="divCargando" class="backgroundCarga">
+		<img src="assets/images/cargando.gif">
+	</div>
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
 	<script src="assets/js/jQuery.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>

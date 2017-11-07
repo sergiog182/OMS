@@ -144,11 +144,6 @@ img.pull-left { margin-right: 10px; }
 	width: 10px;
 }
 
-.active
-{
-	display: block;
-}
-
 .active-image
 {
 	display: table-cell;
@@ -173,4 +168,33 @@ img.pull-left { margin-right: 10px; }
 .table-container
 {
 	overflow-x: auto; 
+}
+
+.no-list
+{
+	list-style-type: none;
+}
+
+.tmargin-5
+{
+	margin-top: 5px;
+}
+
+.backgroundCarga
+{
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: none;
+	z-index: 1100;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.active
+{
+	display: block;
 }

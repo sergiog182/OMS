@@ -7,7 +7,11 @@ function printPaginator(currentPage, totalItems, numberItemsToShow, divPaginator
 	var tdPrevius = document.createElement("td");
 	var btnPrevius = document.createElement("button");
 	$(btnPrevius).addClass("btn-custom btn-sm btn-paginator");
-	$(btnPrevius).data("page", (currentPage - 1));
+	if ((currentPage - 1) > 0) {
+		$(btnPrevius).data("page", (currentPage - 1));	
+	} else {
+		$(btnPrevius).data("page", 0);
+	}
 	$(btnPrevius).data("parametro", parametro);
 	var iconPrevius = document.createElement("span");
 	$(iconPrevius).addClass("glyphicon glyphicon-chevron-left");
@@ -85,7 +89,11 @@ function printPaginator(currentPage, totalItems, numberItemsToShow, divPaginator
 	var tdNext = document.createElement("td");
 	var btnNext = document.createElement("button");
 	$(btnNext).addClass("btn-custom btn-sm btn-paginator");
-	$(btnNext).data("page", (currentPage + 1));
+	if ((currentPage + 1) <= cantidad) {
+		$(btnNext).data("page", (currentPage + 1));
+	} else {
+		$(btnNext).data("page", 0);
+	}
 	$(btnNext).data("parametro", parametro);
 	var iconNext = document.createElement("span");
 	$(iconNext).addClass("glyphicon glyphicon-chevron-right");
@@ -96,4 +104,17 @@ function printPaginator(currentPage, totalItems, numberItemsToShow, divPaginator
 
 	var div = document.getElementById(divPaginator);
 	div.appendChild(table);
+}
+
+function validateEmail(email) {
+	regExp = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+	return regExp.test(email);
+}
+
+function setCargando(estado) {
+	if (estado == 1) {
+		$("#divCargando").addClass('active');
+	} else {
+		$("#divCargando").removeClass('active');
+	}
 }
