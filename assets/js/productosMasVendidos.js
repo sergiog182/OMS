@@ -122,7 +122,7 @@ $(document).ready(function(){
 	});
 });
 
-function printRankingData(jsonData, headers, divName, page) {
+function printRankingData(jsonData, headers, divName, page, numeroElementos) {
 	var divTableContainer = document.createElement("DIV");
 	$(divTableContainer).addClass("table-container");
 	var table = document.createElement("TABLE");
@@ -189,6 +189,6 @@ function printRankingData(jsonData, headers, divName, page) {
 	$(div).addClass("active");
 	$(div).html(divTableContainer);
 
-	//printPaginator(page, numeroElementos, 10, "result-content", parametro);
+	printPaginator(page, numeroElementos, 10, "result-content", parametro);
 	setCargando(0);
 }

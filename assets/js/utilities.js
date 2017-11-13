@@ -118,3 +118,9 @@ function setCargando(estado) {
 		$("#divCargando").removeClass('active');
 	}
 }
+
+$(document).ready(function(){
+	$(document).on("click", ".cerrarSesion", function(){
+		location.href = "../index.html";
+	});
+});

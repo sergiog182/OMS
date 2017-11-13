@@ -8,17 +8,17 @@
 	
 	<title>OMS - administraci&oacute;n</title>
 
-	<link rel="shortcut icon" href="assets/images/favicon.png">
+	<link rel="shortcut icon" href="../assets/images/favicon.png">
 	
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css">
 	
-	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../assets/css/font-awesome.min.css">
 
 	<!-- Custom styles for our template -->
-	<link rel="stylesheet" href="assets/css/bootstrap-theme.css" media="screen" >
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap-theme.css" media="screen" >
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 
 <body class="home">
@@ -41,21 +41,8 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="home.html">Inicio</a></li>
-					<li><a href="productos.html">Productos</a></li>
 					<li><a href="clientes.html">Clientes</a></li>
-					<li><a href="campanas.html">Campa&ntilde;as</a></li>
-					<li><a href="ordenes.html">Ordenes</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="productosMasVendidos.html">Productos m&aacute;s vendidos</a></li>
-							<li><a href="categoriasMasVendidas.html">Categor&iacute;as m&aacute;s vendidas</a></li>
-							<li><a href="ordenesQueMasFacturaron.html">Ordenes que mas factruaron</a></li>
-							<li class="active"><a href="#">Ordenes cerradas</a></li>
-							<li><a href="ordenesAbiertas.html">Ordenes abiertas</a></li>
-							<li><a href="rankingClientes.html">Ranking clientes</a></li>
-						</ul>
-					</li>
+					<li class="active"><a href="#">Ranking de clientes/productos</a></li>
 					<li><a href="#" class="cerrarSesion">Cerrar sesi&oacute;n</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -69,7 +56,7 @@
 			<!-- Article main content -->
 			<article class="col-xs-12 maincontent">
 				<header class="page-header">
-					<h2 class="thin">Ranking ordenes cerradas</h2>
+					<h2 class="thin">Ranking clientes que mas facturan</h2>
 				</header>
 				
 				<div>
@@ -77,8 +64,19 @@
 						<div class="panel-body">
 							<form>
 								<div class="row">
-									<div class="col-lg-12">
-										Reporte de as ordenes que se encuentran cerradas ordenadas desde la que mas facturo hasta la que menos lo hizo
+									<div class="col-lg-4">
+										<label>Fecha inicial: </label>
+										<div class="input-group">
+											<input type="text" class="form-control datepicker" data-date-format="dd/mm/yyyy" id="txtFechaInical" name="txtFechaInicial">
+											<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<label>Fecha final: </label>
+										<div class="input-group">
+											<input type="text" class="form-control datepicker" data-date-format="dd/mm/yyyy" id="txtFechaFinal" name="txtFechaFinal">
+											<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+										</div>
 									</div>
 								</div>
 
@@ -231,17 +229,17 @@
 	</footer>
 
 	<div id="divCargando" class="backgroundCarga">
-		<img src="assets/images/cargando.gif">
+		<img src="../assets/images/cargando.gif">
 	</div>
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
-	<script src="assets/js/jQuery.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/bootstrap-datepicker.js"></script>
-	<script src="assets/js/headroom.min.js"></script>
-	<script src="assets/js/jQuery.headroom.min.js"></script>
-	<script src="assets/js/template.js"></script>
-	<script src="assets/js/utilities.js"></script>
-	<script src="assets/js/productosMasVendidos.js"></script>
+	<script src="../assets/js/jQuery.min.js"></script>
+	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/bootstrap-datepicker.js"></script>
+	<script src="../assets/js/headroom.min.js"></script>
+	<script src="../assets/js/jQuery.headroom.min.js"></script>
+	<script src="../assets/js/template.js"></script>
+	<script src="../assets/js/utilities.js"></script>
+	<script src="../assets/js/productosMasVendidos.js"></script>
 </body>
 </html>

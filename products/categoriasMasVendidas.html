@@ -8,15 +8,17 @@
 	
 	<title>OMS - administraci&oacute;n</title>
 
-	<link rel="shortcut icon" href="assets/images/favicon.png">
+	<link rel="shortcut icon" href="../assets/images/favicon.png">
 	
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css">
+	
+	<link rel="stylesheet" href="../assets/css/font-awesome.min.css">
 
 	<!-- Custom styles for our template -->
-	<link rel="stylesheet" href="assets/css/bootstrap-theme.css" media="screen" >
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/bootstrap-theme.css" media="screen" >
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 
 <body class="home">
@@ -39,21 +41,9 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li><a href="home.html">Inicio</a></li>
-					<li><a href="productos.html">Productos</a></li>
-					<li><a href="clientes.html">Clientes</a></li>
-					<li><a href="campanas.html">Campa&ntilde;as</a></li>
-					<li class="active"><a href="#">Ordenes</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="productosMasVendidos.html">Productos m&aacute;s vendidos</a></li>
-							<li><a href="categoriasMasVendidas.html">Categor&iacute;as m&aacute;s vendidas</a></li>
-							<li><a href="ordenesQueMasFacturaron.html">Ordenes que mas factruaron</a></li>
-							<li><a href="ordenesCerradas.html">Ordenes cerradas</a></li>
-							<li><a href="ordenesAbiertas.html">Ordenes abiertas</a></li>
-							<li><a href="rankingClientes.html">Ranking clientes</a></li>
-						</ul>
-					</li>
+					<li><a href="products.html">Productos</a></li>
+					<li><a href="productosMasVendidos.html">Productos m&aacute;s vendidos</a></li>
+					<li class="active"><a href="#">Categor&iacute;as m&aacute;s vendidas</a></li>
 					<li><a href="#" class="cerrarSesion">Cerrar sesi&oacute;n</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -67,7 +57,7 @@
 			<!-- Article main content -->
 			<article class="col-xs-12 maincontent">
 				<header class="page-header">
-					<h2 class="thin">Modulo de Ordenes</h2>
+					<h2 class="thin">Ranking categorias mas vendidos</h2>
 				</header>
 				
 				<div>
@@ -76,12 +66,18 @@
 							<form>
 								<div class="row">
 									<div class="col-lg-4">
-										<label>N&uacute;mero de orden: </label>
-										<input type="text" class="form-control" id="numeroOrden" name="numeroOrden">
+										<label>Fecha inicial: </label>
+										<div class="input-group">
+											<input type="text" class="form-control datepicker" data-date-format="dd/mm/yyyy" id="txtFechaInical" name="txtFechaInicial">
+											<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+										</div>
 									</div>
 									<div class="col-lg-4">
-										<label>Codigo producto: </label>
-										<input type="text" class="form-control" id="codigoProductoComprado" name="codigoProductoComprado">
+										<label>Fecha final: </label>
+										<div class="input-group">
+											<input type="text" class="form-control datepicker" data-date-format="dd/mm/yyyy" id="txtFechaFinal" name="txtFechaFinal">
+											<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+										</div>
 									</div>
 								</div>
 
@@ -90,12 +86,8 @@
 								<div class="row">
 									<div class="col-lg-8"></div>
 									<div class="col-lg-4 text-right">
-										<!--<button class="btn btn-success" data-toggle="modal" data-target="#formModal" type="button" id="addClient" name="addClient">
-											Agregar
-										</button>-->
-										&nbsp;
-										<button class="btn btn-action" type="button" id="findClient" name="findClient">
-											Buscar
+										<button class="btn btn-action" type="button" id="generateReport" name="generateReport">
+											Generar
 										</button>
 									</div>
 								</div>
@@ -107,7 +99,7 @@
 									    <div class="modal-content">
 									      	<div class="modal-header">
 										        <button type="button" class="close" data-dismiss="modal">&times;</button>
-										        <h4 class="modal-title">Orden <label id="orderCode" name="orderCode"></label></h4>
+										        <h4 class="modal-title">Categoria <label id="categoryCode" name="categoryCode"></label></h4>
 									      	</div>
 									      	<div class="modal-body" id="modalContent" name="modalContent">
 									      		<div class="row">
@@ -152,7 +144,6 @@
 									      				</div>
 									      			</div>
 								      			</div>
-								      			
 									      		<div class="row">
 									      			<div class="col-md-6">
 									      				<label for="divItems">
@@ -238,16 +229,17 @@
 	</footer>
 
 	<div id="divCargando" class="backgroundCarga">
-		<img src="assets/images/cargando.gif">
+		<img src="../assets/images/cargando.gif">
 	</div>
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
-	<script src="assets/js/jQuery.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/headroom.min.js"></script>
-	<script src="assets/js/jQuery.headroom.min.js"></script>
-	<script src="assets/js/template.js"></script>
-	<script src="assets/js/utilities.js"></script>
-	<script src="assets/js/orders.js"></script>
+	<script src="../assets/js/jQuery.min.js"></script>
+	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../assets/js/bootstrap-datepicker.js"></script>
+	<script src="../assets/js/headroom.min.js"></script>
+	<script src="../assets/js/jQuery.headroom.min.js"></script>
+	<script src="../assets/js/template.js"></script>
+	<script src="../assets/js/utilities.js"></script>
+	<script src="../assets/js/productosMasVendidos.js"></script>
 </body>
 </html>
