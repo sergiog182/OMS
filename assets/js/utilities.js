@@ -123,4 +123,14 @@ $(document).ready(function(){
 	$(document).on("click", ".cerrarSesion", function(){
 		location.href = "../index.html";
 	});
+
+	$(document).on("click", ".inicioSesion", function(){
+		var user = $("#username").val();
+		var password = $("#password").val();
+		if (user == "" || password == "") {
+			alert("Valida la informacion del usuario");
+		} else {
+			location.href = "products/products.html";	
+		}
+	});
 });
